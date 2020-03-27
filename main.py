@@ -2,36 +2,34 @@ from Classes import Jogo
 import os
 
 #Para limpar console os.system('clear')
-
-print("Olá, você está participando da casa mais vigiada do Brasil.")
-print("A primeira coisa que precisamos saber é qual o seu nome.")
-nome = input("Informe o seu nome e sobrenome? Ex: Thiago Leifert :)\n -> ")
+os.system('cls')
+print("Olá, você está participando da casa mais vigiada do Brasil.\n")
+print("A primeira coisa que precisamos saber é qual o seu nome.\n")
+nome = input("Informe o seu nome e sobrenome. Ex: Thiago Leifert :)\n-> ")
 
 nome = nome.lower().title()
 jogo = Jogo(nome)
 os.system('cls')
 
-print("\n")
-print(f"Tudo certo, {nome}. Agora vamos começar!")
-print("A seguir você iniciará o jogo.\nSão 16 rodadas que você deverá tentar sobreviver.")
-input("Pressione Enter para continuar.")
+print(f"Tudo certo, {nome}. Agora vamos começar!\n")
+print("O jogo funciona da seguinte forma, um lider e um anjo são selecionados entre os participantes e então")
+print("haverá uma votação para eliminar um participante.")
+print("A seguir você iniciará no jogo.\n\nSão 16 rodadas que você deverá tentar sobreviver. BOA SORTE!")
+input("\nPressione Enter para continuar.")
 os.system('cls')
 
 rodada = 1
 
-print("O jogo vai começar")
-
-while rodada <= 16:
+while True:
     print(f"Rodada: {rodada}")
+    input("Aperte Enter para prosseguir")
     jogo.definir_lider()
-    print(f"O ganhador da liderança foi {jogo.lider}. O jogador poderá indicar alguém ao paredão e está imune.")
-    input("Enter para prosseguir")
+    print(f"\nO ganhador da liderança foi {jogo.lider}. O jogador poderá indicar alguém ao paredão e está imune.")
+    input("Pressione Enter para prosseguir")
     jogo.definir_anjo()
-    print(f"O ganhador do anjo foi {jogo.anjo}. O jogador está imune da votação.")
-    input("Enter para prosseguir")
-
-    os.system('cls')
-
+    print(f"\nO ganhador do anjo foi {jogo.anjo}. O jogador está imune da votação.")
+    input("Pressione Enter para prosseguir")
+    print("\n")
     print("VOTAÇÃO:")
     jogo.paredao_eliminacao()
 
@@ -48,7 +46,10 @@ while rodada <= 16:
         break
 
     rodada = rodada + 1
-    input("Pressione o Enter para a próxima rodada.")
-    os.system('clear')
+    input("Pressione Enter para a verificar o status do jogo.")
+    os.system('cls')
+    print(jogo)
+    input("\nPressione Enter para ir para próxima rodada.")
+    os.system('cls')
 
 input("Aperte enter para encerrar!")
