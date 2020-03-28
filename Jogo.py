@@ -1,3 +1,5 @@
+from Jogador import JogadorMaquina
+from Jogador import JogadorPrincipal
 import random
 
 
@@ -42,12 +44,24 @@ class Jogo:
 
     def carrega_jogadores(self):
         texto = open('nomes.txt', "r", encoding="utf-8")
-        todos_jogadores = [linha.replace("\n", "") for linha in texto]
+        todos_jogadores = [linha.replace("\n", "") for linha in texto] #captura todos os jogadores disponiveis
+        jogadores_selecionados = []
+        while len(jogadores_selecionados) != 16:
+            indice = random.randrange(0, 100)           #sorteia jogadores disponiveis
+            if todos_jogadores[indice] not in jogadores_selecionados:
+                jogadores_selecionados.append(todos_jogadores[indice])      #adiciona jogador sorteado
+
         jogadores_atuais = []
-        while len(jogadores_atuais) != 16:
-            indice = random.randrange(0, 100)
-            if todos_jogadores[indice] not in jogadores_atuais:
-                jogadores_atuais.append(todos_jogadores[indice])
+        for jogador_selecionado in jogadores_selecionados:
+            info_jogador = jogador_selecionado.split(";")
+            nome = info_jogador[0]
+            peso = info_jogador[1]
+            altura = info_jogador[2]
+            velocidade = info_jogador[3]
+            resistencia = info_jogador[4]
+            sorte = info_jogador[5]
+            jogador = JogadorMaquina(nome, peso, altura, velocidade, resistencia, sorte)
+            jogadores_atuais.append(jogador)    #adiciona informações jogadores
         return jogadores_atuais
 
     def definir_lider(self):
@@ -109,12 +123,13 @@ class Jogo:
             self.__eliminados.append(segundo_emparedado)
             self.__jogadores_atuais.remove(segundo_emparedado)
 
-        self.__lider = ""
-        self.__anjo = ""
-
         if self.verifica_jogador_eliminado():
             campeao = participantes[random.randrange(0,len(participantes))]
             print(f"\nVocê foi eliminado do jogo. O jogo seguiu sem você e o campeão foi {campeao}")
+
+    def proxima_rodada(self):
+        self.__lider = ""
+        self.__anjo = ""
 
     def campeao_jogo(self):
         numero_vencedor = random.randrange(0,100)
