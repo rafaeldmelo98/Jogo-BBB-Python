@@ -1,4 +1,4 @@
-from Classes import Jogo
+from Jogo import Jogo
 import os
 
 #Para limpar console os.system('clear')
@@ -14,7 +14,7 @@ os.system('cls')
 print(f"Tudo certo, {nome}. Agora vamos começar!\n")
 print("O jogo funciona da seguinte forma, um lider e um anjo são selecionados entre os participantes e então")
 print("haverá uma votação para eliminar um participante.")
-print("A seguir você iniciará no jogo.\n\nSão 16 rodadas que você deverá tentar sobreviver. BOA SORTE!")
+print("A seguir você iniciará no jogo.\n\nSão 13 rodadas que você deverá tentar sobreviver. BOA SORTE!")
 input("\nPressione Enter para continuar.")
 os.system('cls')
 
