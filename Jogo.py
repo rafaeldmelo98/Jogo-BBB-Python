@@ -64,13 +64,7 @@ class Jogo:
         if not self.verifica_jogador_eh_lider() and lidervotou == True:
             voto = self.voto_jogador(participantes)
             votos.append(voto)
-        for count in range(len(participantes)):
-            if len(participantes) > 2:
-                voto = random.randrange(0, len(participantes)-1)
-                votos.append(voto)
-            else:
-                votos.append(0)
-                votos.append(1)
+
 
         emparedado = -1
         if len(participantes) > 2:

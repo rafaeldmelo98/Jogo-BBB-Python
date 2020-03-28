@@ -1,16 +1,41 @@
-from Jogo import Jogo
 import random
-from abc import abstractmethod
 
 
 class JogadorPrincipal:
     def __init__(self,nome, peso, altura):
-        self.nome = nome
-        self.peso = peso
-        self.altura = altura
+        self.__nome = nome
+        self.__peso = peso
+        self.__altura = altura
         self.__velocidade = 0
         self.__resistencia = 0
         self.__sorte = random.randrange(0,100)
+
+    @property
+    def nome(self):
+        return self.__nome
+
+    @property
+    def peso(self):
+        return self.__peso
+
+    @property
+    def altura(self):
+        return self.__altura
+
+    @property
+    def velocidade(self):
+        return self.__velocidade
+
+    @property
+    def resistencia(self):
+        return self.__resistencia
+
+    @property
+    def sorte(self):
+        return self.__sorte
+
+    def __str__(self):
+        return f"Jogador: {self.nome} (Peso:{self.peso} Altura:{self.altura} VEL:{self.velocidade} RES: {self.resistencia} SOR: {self.sorte}"
 
     def definir_valores_iniciais(self, peso, altura):
         #definindo valores de velocidade, resistencia e sorte de acordo com dados do jogador
@@ -47,7 +72,7 @@ class JogadorPrincipal:
         for jogador in jogadores_disponiveis:
             print(f"{jogadores_disponiveis.index(jogador)} - {jogador}")
 
-        while True:
+        while voto <= -1 or voto > len(jogadores_disponiveis):
             voto = int(input("Informe o número do jogador que você deseja que saia: "))
             if voto >= len(jogadores_disponiveis) or voto <= -1 or voto is None:
                 print("\n Informe o número de um jogador disponivel para voto!")
@@ -55,14 +80,44 @@ class JogadorPrincipal:
                 break
         return voto
 
+
 class JogadorMaquina:
     def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
-        self.nome = nome
-        self.peso = peso
-        self.altura = altura
-        self.velocidade = velocidade
-        self.resistencia = resistencia
-        self.sorte = sorte
+        self.__nome = nome
+        self.__peso = peso
+        self.__altura = altura
+        self.__velocidade = velocidade
+        self.__resistencia = resistencia
+        self.__sorte = sorte
 
-    def votar(self):
-        pass
+    @property
+    def nome(self):
+        return self.__nome
+
+    @property
+    def peso(self):
+        return self.__peso
+
+    @property
+    def altura(self):
+        return self.__altura
+
+    @property
+    def velocidade(self):
+        return self.__velocidade
+
+    @property
+    def resistencia(self):
+        return self.__resistencia
+
+    @property
+    def sorte(self):
+        return self.__sorte
+
+    def votar(self, participantes):
+        participantes.remove(JogadorMaquina)
+        for count in range(len(participantes)):
+            if len(participantes) > 2:
+                return random.randrange(0, len(participantes)-1)
+            else:
+                return 0
