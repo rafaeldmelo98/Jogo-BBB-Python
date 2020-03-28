@@ -1,12 +1,13 @@
 from Jogo import Jogo
-import math
 import random
+from abc import abstractmethod
 
-class Jogador:
-    def __init__(self, nome, peso, altura):
-        self.__nome = nome
-        self.__peso = peso
-        self.__altura = altura
+
+class JogadorPrincipal:
+    def __init__(self,nome, peso, altura):
+        self.nome = nome
+        self.peso = peso
+        self.altura = altura
         self.__velocidade = 0
         self.__resistencia = 0
         self.__sorte = random.randrange(0,100)
@@ -33,6 +34,35 @@ class Jogador:
         else:
             self.__resistencia = random.randrange(20, 50)
             self.__velocidade = random.randrange(20, 50)
-        
 
+    def votar(self, participantes):
+        input("\nVoto do jogador. Pressione Enter para prosseguir\n")
+        print("Jogadores disponiveis para voto.\n")
+        jogadores_disponiveis = participantes.copy()
+        if self.jogador_principal in jogadores_disponiveis:
+            jogadores_disponiveis.remove(self.jogador_principal)
 
+        voto = -1
+
+        for jogador in jogadores_disponiveis:
+            print(f"{jogadores_disponiveis.index(jogador)} - {jogador}")
+
+        while True:
+            voto = int(input("Informe o número do jogador que você deseja que saia: "))
+            if voto >= len(jogadores_disponiveis) or voto <= -1 or voto is None:
+                print("\n Informe o número de um jogador disponivel para voto!")
+            if voto >= 0 or voto < len(jogadores_disponiveis):
+                break
+        return voto
+
+class JogadorMaquina:
+    def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
+        self.nome = nome
+        self.peso = peso
+        self.altura = altura
+        self.velocidade = velocidade
+        self.resistencia = resistencia
+        self.sorte = sorte
+
+    def votar(self):
+        pass
