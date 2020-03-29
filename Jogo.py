@@ -171,8 +171,10 @@ class Jogo:
 
     def selecionar_participantes(self):
         participantes = self.__jogadores_atuais.copy()
-        if self.lider != "":
-            participantes.remove(self.lider)
-        if self.anjo != "":
-            participantes.remove(self.anjo)
+        for jogador in participantes:
+            if self.lider == jogador:
+                participantes.remove(jogador)
+            if self.anjo == jogador:
+                participantes.remove(jogador)
+
         return participantes

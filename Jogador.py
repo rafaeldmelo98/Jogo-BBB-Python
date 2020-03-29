@@ -52,7 +52,7 @@ class JogadorPrincipal(Jogador):
         return self.__sorte
 
     def __str__(self):
-        return f"Jogador: {self.nome} (Peso:{self.peso} Altura:{self.altura} VEL:{self.velocidade} RES: {self.resistencia} SOR: {self.sorte}"
+        return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
 
     def definir_valores_iniciais(self, peso, altura):
         #definindo valores de velocidade, resistencia e sorte de acordo com dados do jogador
@@ -104,6 +104,9 @@ class JogadorMaquina(Jogador):
         self.__velocidade = velocidade
         self.__resistencia = resistencia
         self.__sorte = sorte
+
+    def __str__(self):
+        return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
 
     @property
     def velocidade(self):
