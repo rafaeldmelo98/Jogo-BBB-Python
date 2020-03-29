@@ -4,7 +4,7 @@ import random
 
 
 class Jogo:
-    def __init__(self, jogador_principal):
+    def __init__(self, jogador_principal: JogadorPrincipal):
         self.__jogador_principal = jogador_principal
         self.__jogadores_atuais = self.carrega_jogadores()
         self.__jogadores_atuais[0] = self.__jogador_principal
@@ -65,42 +65,46 @@ class Jogo:
         return jogadores_atuais
 
     def definir_lider(self):
+        # MUDAR PARA PROVA DO LIDER
         self.__lider = self.sorteia_ganhador_prova(self.jogadores_atuais)
 
     def definir_anjo(self):
+        #MUDAR PARA PROVA DO ANJO
         participantes = self.jogadores_atuais.copy()
         if self.lider != "":
             participantes.remove(self.lider)
         self.__anjo = self.sorteia_ganhador_prova(participantes)
 
-    def votacao(self, participantes, lidervotou):
+    def votacao(self, participantes):
         votos = []
-        if not self.verifica_jogador_eh_lider() and lidervotou == True:
-            voto = self.voto_jogador(participantes)
+        emparedado = -1
+
+        voto = self.jogador_principal.votar(participantes)
+        votos.append(voto)
+
+        for jogador in self.jogadores_atuais:
+            voto = jogador.votar(participantes)
             votos.append(voto)
 
-
-        emparedado = -1
-        if len(participantes) > 2:
-            for voto in votos:
-                if votos.count(voto) > emparedado:
-                    emparedado = voto
-        else:
+        if len(participantes) < 2:
             emparedado = random.randrange(0,1)
 
-        if lidervotou == True:
-            input("A casa votou. Pressione Enter para ver o resultado.")
+        input("A casa votou. Pressione Enter para ver o resultado.")
 
         return emparedado
 
     def voto_lider(self, participantes):
         if self.verifica_jogador_eh_lider():
-            voto = self.voto_jogador(participantes)
+            voto = self.jogador_principal.votar(participantes)
             input("\nO lider votou! Pressione Enter para prosseguir.")
             return voto
         else:
             input("\nO lider votou! Pressione Enter para prosseguir.")
-            return self.votacao(participantes, lidervotou=False)
+            lider = 0
+            for jogador in self.jogadores_atuais:
+                if jogador.nome == self.lider:
+                    lider = jogador
+            return lider.votar(participantes)
 
     def paredao_eliminacao(self):
         participantes = self.selecionar_participantes()
