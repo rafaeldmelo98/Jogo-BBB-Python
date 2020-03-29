@@ -1,5 +1,7 @@
 from Jogador import JogadorMaquina
 from Jogador import JogadorPrincipal
+from Prova import ProvaLider
+from Prova import ProvaAnjo
 import random
 
 
@@ -70,15 +72,14 @@ class Jogo:
         return jogadores_atuais
 
     def definir_lider(self):
-        # MUDAR PARA PROVA DO LIDER
-        self.__lider = self.sorteia_ganhador_prova(self.jogadores_atuais)
+        participantes = self.selecionar_participantes()
+        prova_selecionada = random.randrange(1,5)
+        self.__lider = ProvaLider(prova_selecionada, participantes).seletor_de_prova()
 
     def definir_anjo(self):
-        #MUDAR PARA PROVA DO ANJO
-        participantes = self.jogadores_atuais.copy()
-        if self.lider != "":
-            participantes.remove(self.lider)
-        self.__anjo = self.sorteia_ganhador_prova(participantes)
+        participantes = self.selecionar_participantes()
+        prova_selecionada = random.randrange(1, 6)
+        self.__anjo = ProvaAnjo(prova_selecionada, self.lider, participantes).seletor_de_prova()
 
     def votacao(self, participantes):
         votos = []
