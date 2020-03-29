@@ -154,24 +154,13 @@ class Jogo:
             numero_sorte = abs(numero_vencedor - numero)
             jogador = self.jogadores_atuais[indice_jogador]
             numero_sorte += jogador.sorte
-                        
+            indice_jogador += 1
+
             if numero_sorte < minimo:
                 minimo = numero_sorte
                 ganhador = sorteio.index(numero)
 
         return self.jogadores_atuais[ganhador]
-
-    def sorteia_ganhador_prova(self, jogadores):
-        participantes = jogadores
-        maior_numero = 0
-        ganhador = -1
-
-        for count in range(len(participantes)):
-            sorteio = random.randrange(0, 100)
-            if sorteio > maior_numero:
-                maior_numero = sorteio
-                ganhador = count
-        return participantes[ganhador]
 
     def verifica_jogador_eliminado(self):
         return self.jogador_principal in self.__eliminados
