@@ -1,4 +1,3 @@
-from Jogador import Jogador
 from Jogador import JogadorMaquina
 from Jogador import JogadorPrincipal
 import random
@@ -14,14 +13,8 @@ class Jogo:
         self.__anjo = ""
 
     def __str__(self):
-        print(f"Jogador principal: {self.jogador_principal}")
-        print("\nJogadores atuais:\n")
-        for jogador in self.jogadores_atuais:
-            print(jogador)
-        print("\nEliminados:\n")
-        for eliminado in self.eliminados:
-            print(eliminado)
-        return ""
+
+        return f"Jogador principal: {self.jogador_principal}" + self.lista_jogadores() + self.lista_eliminados()
 
     @property
     def jogador_principal(self):
@@ -42,6 +35,17 @@ class Jogo:
     @property
     def eliminados(self):
         return self.__eliminados
+
+    def lista_jogadores(self):
+        print("\nJogadores atuais:\n")
+        for jogador in self.jogadores_atuais:
+            print(jogador)
+
+    def lista_eliminados(self):
+        print("\nEliminados:\n")
+        for eliminado in self.eliminados:
+            print(eliminado)
+
 
     def carrega_jogadores(self):
         texto = open('nomes.txt', "r", encoding="utf-8")
@@ -97,7 +101,7 @@ class Jogo:
         return emparedado
 
     def voto_lider(self, participantes):
-        if self.verifica_jogador_eh_lider():
+        if self.verifica_jogador_principal_eh_lider():
             voto = self.jogador_principal.votar(participantes)
             input("\nO lider votou! Pressione Enter para prosseguir.")
             return voto
@@ -113,26 +117,26 @@ class Jogo:
         participantes = self.selecionar_participantes()
         primeiro_emparedado = participantes[self.voto_lider(participantes)]
         participantes.remove(primeiro_emparedado)
-        segundo_emparedado = participantes[self.votacao(participantes, lidervotou=True)]
+        segundo_emparedado = participantes[self.votacao(participantes)]
 
         print(f"\nO voto do lider foi {primeiro_emparedado}.")
-        print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado} e {segundo_emparedado}.")
+        print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado.nome} e {segundo_emparedado.nome}.")
         input("Pressione Enter para ver o resultado do paredão.")
 
         percentagem_primeiro_emparedado = random.randrange(0,100)
         percentagem_segundo_emparedado = random.randrange(0,100)
         if percentagem_primeiro_emparedado > percentagem_segundo_emparedado:
-            print(f"\nO público decidiu. E quem sai hoje é {primeiro_emparedado}.")
+            print(f"\nO público decidiu. E quem sai hoje é {primeiro_emparedado.nome}.")
             self.__eliminados.append(primeiro_emparedado)
             self.__jogadores_atuais.remove(primeiro_emparedado)
         else:
-            print(f"\nO público decidiu. E quem sai hoje é {segundo_emparedado}.")
+            print(f"\nO público decidiu. E quem sai hoje é {segundo_emparedado.nome}.")
             self.__eliminados.append(segundo_emparedado)
             self.__jogadores_atuais.remove(segundo_emparedado)
 
         if self.verifica_jogador_eliminado():
             campeao = participantes[random.randrange(0,len(participantes))]
-            print(f"\nVocê foi eliminado do jogo. O jogo seguiu sem você e o campeão foi {campeao}")
+            print(f"\nVocê foi eliminado do jogo. O jogo seguiu sem você e o campeão foi {campeao}.")
 
     def proxima_rodada(self):
         self.__lider = ""
@@ -142,13 +146,19 @@ class Jogo:
         numero_vencedor = random.randrange(0,100)
         minimo = 100
         sorteio = []
+        indice_jogador = 0
+
         for i in range(3):
             sorteio.append(random.randrange(0,100))
         for numero in sorteio:
             numero_sorte = abs(numero_vencedor - numero)
+            jogador = self.jogadores_atuais[indice_jogador]
+            numero_sorte += jogador.sorte
+                        
             if numero_sorte < minimo:
                 minimo = numero_sorte
                 ganhador = sorteio.index(numero)
+
         return self.jogadores_atuais[ganhador]
 
     def sorteia_ganhador_prova(self, jogadores):
@@ -166,7 +176,7 @@ class Jogo:
     def verifica_jogador_eliminado(self):
         return self.jogador_principal in self.__eliminados
 
-    def verifica_jogador_eh_lider(self):
+    def verifica_jogador_principal_eh_lider(self):
         return self.jogador_principal == self.lider
 
     def selecionar_participantes(self):

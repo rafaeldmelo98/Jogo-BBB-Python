@@ -21,6 +21,17 @@ os.system('cls')
 rodada = 1
 
 while True:
+
+    if len(jogo.jogadores_atuais) == 3:
+        print("VOCÊ CHEGOU AOS TRÊS FINALISTAS!")
+        print(f"{jogo.jogadores_atuais[0]},{jogo.jogadores_atuais[1]},{jogo.jogadores_atuais[2]}. O público já decidiu quem de vocês merece ser o campeão.")
+        input("Pressione Enter para prosseguir.")
+        campeao = jogo.campeao_jogo()
+        input("\nE O CAMPEÃO DO JOGO FOI......\nPressione Enter para descobrir quem foi o campeão.")
+        print(f"PARABÉNS {campeao}!!!! VOCÊ É O CAMPEÃO DO GAME!")
+        input()
+        break
+
     print(f"Rodada: {rodada}")
     input("Aperte Enter para prosseguir")
     jogo.definir_lider()
@@ -35,13 +46,6 @@ while True:
 
     if jogo.verifica_jogador_eliminado():
         print("FIM DE JOGO")
-        input()
-        break
-
-    if len(jogo.jogadores_atuais) == 3:
-        print("VOCÊ CHEGOU AOS TRÊS FINALISTAS!")
-        jogo.campeao_jogo()
-        print(f"O ganhador do jogo foi {jogo.campeao_jogo()}")
         input()
         break
 
