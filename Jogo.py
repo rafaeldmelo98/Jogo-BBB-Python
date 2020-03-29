@@ -1,3 +1,4 @@
+from Jogador import Jogador
 from Jogador import JogadorMaquina
 from Jogador import JogadorPrincipal
 import random
@@ -7,7 +8,7 @@ class Jogo:
     def __init__(self, jogador_principal: JogadorPrincipal):
         self.__jogador_principal = jogador_principal
         self.__jogadores_atuais = self.carrega_jogadores()
-        self.__jogadores_atuais[0] = self.__jogador_principal
+        self.__jogadores_atuais.insert(0, self.jogador_principal)
         self.__eliminados = []
         self.__lider = ""
         self.__anjo = ""
@@ -83,6 +84,8 @@ class Jogo:
         votos.append(voto)
 
         for jogador in self.jogadores_atuais:
+            if jogador == self.jogador_principal:
+                continue
             voto = jogador.votar(participantes)
             votos.append(voto)
 

@@ -1,11 +1,28 @@
 import random
 
 
-class JogadorPrincipal:
-    def __init__(self,nome, peso, altura):
+class Jogador:
+    def __init__(self, nome, peso, altura):
         self.__nome = nome
         self.__peso = peso
         self.__altura = altura
+
+    @property
+    def nome(self):
+        return self.__nome
+
+    @property
+    def peso(self):
+        return self.__peso
+
+    @property
+    def altura(self):
+        return self.__altura
+
+
+class JogadorPrincipal(Jogador):
+    def __init__(self, nome, peso, altura):
+        super().__init__(nome, peso, altura)
         self.__velocidade = 0
         self.__resistencia = 0
         self.__sorte = random.randrange(0,100)
@@ -81,26 +98,12 @@ class JogadorPrincipal:
         return voto
 
 
-class JogadorMaquina:
+class JogadorMaquina(Jogador):
     def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
-        self.__nome = nome
-        self.__peso = peso
-        self.__altura = altura
+        super().__init__(nome,peso,altura)
         self.__velocidade = velocidade
         self.__resistencia = resistencia
         self.__sorte = sorte
-
-    @property
-    def nome(self):
-        return self.__nome
-
-    @property
-    def peso(self):
-        return self.__peso
-
-    @property
-    def altura(self):
-        return self.__altura
 
     @property
     def velocidade(self):
