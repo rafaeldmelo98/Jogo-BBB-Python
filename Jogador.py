@@ -4,7 +4,7 @@ import random
 class JogadorPrincipal:
     def __init__(self, nome, peso, altura):
         self.__nome = nome
-        self.peso = peso
+        self.__peso = peso
         self.__altura = altura
         self.__velocidade = 0
         self.__resistencia = 0
@@ -37,9 +37,9 @@ class JogadorPrincipal:
     def __str__(self):
         return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
 
-    def definir_valores_iniciais(self, peso, altura):
+    def definir_valores_iniciais(self):
         #definindo valores de velocidade, resistencia e sorte de acordo com dados do jogador
-        imc = peso / pow(altura, 2)
+        imc = self.peso / pow(self.altura, 2)
 
         if imc <= 18.4:
             self.__resistencia = random.randrange(50,80)
@@ -64,8 +64,8 @@ class JogadorPrincipal:
         input("\nVoto do jogador. Pressione Enter para prosseguir\n")
         print("Jogadores disponiveis para voto.\n")
         jogadores_disponiveis = participantes.copy()
-        if self.jogador_principal in jogadores_disponiveis:
-            jogadores_disponiveis.remove(self.jogador_principal)
+        if self in jogadores_disponiveis:
+            jogadores_disponiveis.remove(self)
 
         voto = -1
         limite_minimo = -1
@@ -73,21 +73,20 @@ class JogadorPrincipal:
         for jogador in jogadores_disponiveis:
             print(f"{jogadores_disponiveis.index(jogador)} - {jogador.nome}")
 
-        while limite_minimo > voto > len(jogadores_disponiveis):
-            voto = int(input("Informe o número do jogador que você deseja que saia: "))
-            if voto >= len(jogadores_disponiveis) or voto <= -1 or voto is None:
-                print("\n Informe o número de um jogador disponivel para voto!")
+        voto = int(input("Informe o número do jogador que você deseja que saia: "))
+        if voto >= len(jogadores_disponiveis) or voto <= -1 or voto is None:
+            print("\n Informe o número de um jogador disponivel para voto!")
         return voto
 
 
 class JogadorMaquina:
     def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
         self.__nome = nome
-        self.__peso = peso
-        self.__altura = altura
-        self.__velocidade = velocidade
-        self.__resistencia = resistencia
-        self.__sorte = sorte
+        self.__peso = int(peso)
+        self.__altura = int(altura)
+        self.__velocidade = int(velocidade)
+        self.__resistencia = int(resistencia)
+        self.__sorte = int(sorte)
 
     def __str__(self):
         return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
@@ -117,8 +116,7 @@ class JogadorMaquina:
     def sorte(self):
         return self.__sorte
 
-    def votar(self, participantes):
-        participantes.remove(JogadorMaquina)
+    def votar(self, participantes, lider):
         for count in range(len(participantes)):
             if len(participantes) > 2:
                 return random.randrange(0, len(participantes)-1)

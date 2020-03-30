@@ -11,6 +11,7 @@ nome = nome.lower().title()
 peso = int(input("Informe o seu peso em Kg. Ex: 68\n-> "))
 altura = int(input("Informe a sua altura em cm. Ex: 177\n-> "))
 jogador_principal = JogadorPrincipal(nome, peso, altura)
+jogador_principal.definir_valores_iniciais()
 
 jogo = Jogo(jogador_principal)
 os.system('cls')
@@ -24,21 +25,27 @@ jogo.lista_jogadores()
 input("\nPressione Enter para continuar.")
 
 rodada = 1
-
-while True:
+selecao = 0
+while selecao != 9:
     os.system('cls')
     print("MENU")
     print("[1] Jogar / Próxima Rodada\n[2] Status de Jogo\n[9] Abandonar Jogo")
-    selecao = int(input("-> "))
+    selecao = input("-> ")
+
+
+    if not selecao != "" and int(selecao) != (1 or 2 or 9):
+        input("Por favor, informe um valor válido.")
+    else:
+        selecao = int(selecao)
     if selecao == 1:
         if len(jogo.jogadores_atuais) == 3 and jogador_principal in jogo.jogadores_atuais:
             os.system('cls')
             print("VOCÊ CHEGOU AOS TRÊS FINALISTAS!")
-            print(f"{jogo.jogadores_atuais[0]},{jogo.jogadores_atuais[1]},{jogo.jogadores_atuais[2]}. O público já decidiu quem de vocês merece ser o campeão.")
+            print(f"{jogo.jogadores_atuais[0].nome},{jogo.jogadores_atuais[1].nome},{jogo.jogadores_atuais[2].nome}. O público já decidiu quem de vocês merece ser o campeão.")
             input("Pressione Enter para prosseguir.")
             campeao = jogo.campeao_jogo()
             input("\nE O CAMPEÃO DO JOGO FOI......\nPressione Enter para descobrir quem foi o campeão.")
-            print(f"PARABÉNS {campeao}!!!! VOCÊ É O CAMPEÃO DO GAME!")
+            print(f"PARABÉNS {campeao.nome}!!!! VOCÊ É O CAMPEÃO DO GAME!")
             input()
             break
         os.system('cls')
@@ -50,9 +57,9 @@ while True:
         os.system('cls')
         jogo.definir_anjo()
         os.system('cls')
-        print(f"O ganhador da liderança foi {jogo.lider.nome}. O jogador poderá indicar alguém ao paredão e está imune.")
-        print(f"\nO ganhador do anjo foi {jogo.anjo.nome}. O jogador está imune da votação.")
-        input("Pressione Enter para continuar")
+        print(f"O ganhador da liderança poderá indicar alguém ao paredão e está imune.")
+        print(f"\nO ganhador do anjo está imune da votação.")
+        input("\nPressione Enter para continuar")
         print("\n")
         print("VOTAÇÃO:")
         jogo.paredao_eliminacao()
@@ -68,5 +75,6 @@ while True:
         input("\nPressione Enter para continuar")
     if selecao == 2:
         print(jogo)
+        input("\nPressione Enter para prosseguir")
 
 input("Aperte enter para encerrar!")

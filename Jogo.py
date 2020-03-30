@@ -15,7 +15,7 @@ class Jogo:
 
     def __str__(self):
 
-        return f"Jogador principal: {self.jogador_principal}" + self.lista_jogadores() + self.lista_eliminados()
+        return f"\n\nJogador principal: {self.jogador_principal}" + self.lista_jogadores() + self.lista_eliminados()
 
     @property
     def jogador_principal(self):
@@ -41,11 +41,13 @@ class Jogo:
         print("\nJogadores atuais:\n")
         for jogador in self.jogadores_atuais:
             print(jogador)
+        return ""
 
     def lista_eliminados(self):
         print("\nEliminados:\n")
         for eliminado in self.eliminados:
             print(eliminado)
+        return ""
 
 
     def carrega_jogadores(self):
@@ -77,7 +79,7 @@ class Jogo:
 
     def definir_anjo(self):
         participantes = self.selecionar_participantes()
-        prova_selecionada = random.randrange(1, 6)
+        prova_selecionada = random.randrange(1, 4)
         self.__anjo = Prova(prova_selecionada, participantes, self.jogador_principal,2).seletor_de_prova()
 
     def votacao(self, participantes):
@@ -90,13 +92,13 @@ class Jogo:
         for jogador in self.jogadores_atuais:
             if jogador == self.jogador_principal:
                 continue
-            voto = jogador.votar(participantes)
+            voto = jogador.votar(participantes,False)
             votos.append(voto)
 
         if len(participantes) < 2:
             emparedado = random.randrange(0,1)
 
-        input("A casa votou. Pressione Enter para ver o resultado.")
+        input("\nA casa votou. Pressione Enter para ver o resultado.")
 
         return emparedado
 
@@ -106,12 +108,8 @@ class Jogo:
             input("\nO lider votou! Pressione Enter para prosseguir.")
             return voto
         else:
-            lider = 0
-            for jogador in self.jogadores_atuais:
-                if jogador.nome == self.lider:
-                    lider = jogador
             input("\nO lider votou! Pressione Enter para prosseguir.")
-            return lider.votar(participantes)
+            return self.__lider.votar(participantes,True)
 
     def paredao_eliminacao(self):
         participantes = self.selecionar_participantes()
@@ -126,17 +124,17 @@ class Jogo:
         percentagem_primeiro_emparedado = random.randrange(0,100)
         percentagem_segundo_emparedado = random.randrange(0,100)
         if percentagem_primeiro_emparedado > percentagem_segundo_emparedado:
-            print(f"\nO público decidiu. E quem sai hoje é {primeiro_emparedado.nome}.")
+            print(f"\nO público decidiu. E quem sai hoje é {primeiro_emparedado.nome.upper()}.")
             self.__eliminados.append(primeiro_emparedado)
             self.__jogadores_atuais.remove(primeiro_emparedado)
         else:
-            print(f"\nO público decidiu. E quem sai hoje é {segundo_emparedado.nome}.")
+            print(f"\nO público decidiu. E quem sai hoje é {segundo_emparedado.nome.upper()}.")
             self.__eliminados.append(segundo_emparedado)
             self.__jogadores_atuais.remove(segundo_emparedado)
 
         if self.verifica_jogador_eliminado():
             campeao = participantes[random.randrange(0,len(participantes))]
-            print(f"\nVocê foi eliminado do jogo. O jogo seguiu sem você e o campeão foi {campeao}.")
+            print(f"\nVocê foi eliminado do jogo. O jogo seguiu sem você e o campeão foi {campeao.nome}.")
 
     def proxima_rodada(self):
         self.__lider = ""
