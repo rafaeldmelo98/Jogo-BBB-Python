@@ -223,8 +223,32 @@ class ProvaLider:
         return lider
 
     def prova_elimina_jogador(self):
-        print("Essa é uma prova de eliminação. Vence o último jogador a ser eliminado.")
+        print("Essa é uma prova de eliminação. Vence o último jogador a ser eliminado.\n")
+        while len(self.participantes) != 1:
+            for jogador in self.participantes:
+                if jogador == self.jogador_principal:
+                    for jogador in self.participantes:
+                        if jogador == self.jogador_principal:
+                            continue
+                        print(f"[{self.participantes.index(jogador)}] - {jogador.nome}")
+                    voto = int(input("\nVote em um jogador para ser eliminado.\n->"))
+                    while 0 > voto > len(jogador):
+                        print("\nInforme um número válido de jogador.")
+                        voto = int(input("Vote em um jogador para ser eliminado.\n-> "))
+                        print("\n")
+                        self.participantes.pop(voto)
+                else:
+                    elimina_jogador = random.randrange(0,(len(self.participantes) - 1))
+                    input(f"{jogador.nome} escolheu eliminar {self.participantes[elimina_jogador].nome}.\nPressione Enter para continuar.")
+                    self.participantes.pop(elimina_jogador)
+                if not self.jogador_principal in self.participantes1:
+                    input(f"\nVocê foi eliminado da prova.\nPressione Enter para continuar.")
+        lider = self.participantes[0]
+        input(f"Parabéns {lider.nome}, você é o novo lider.")
+        return lider
 
+
+'''
     def sorteia_ganhador_prova(self, jogadores):
         participantes = jogadores
         maior_numero = 0
@@ -236,7 +260,7 @@ class ProvaLider:
                 maior_numero = sorteio
                 ganhador = count
         return participantes[ganhador]
-
+'''
 
 class ProvaAnjo:
     def __init__(self, numero, lider, participantes: list, jogador_principal):

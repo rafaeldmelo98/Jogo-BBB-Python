@@ -84,7 +84,7 @@ class JogadorPrincipal:
 class JogadorMaquina:
     def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
         self.__nome = nome
-        self.peso = peso
+        self.__peso = peso
         self.__altura = altura
         self.__velocidade = velocidade
         self.__resistencia = resistencia
