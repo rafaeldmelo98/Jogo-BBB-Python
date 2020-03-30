@@ -106,11 +106,11 @@ class Jogo:
             input("\nO lider votou! Pressione Enter para prosseguir.")
             return voto
         else:
-            input("\nO lider votou! Pressione Enter para prosseguir.")
             lider = 0
             for jogador in self.jogadores_atuais:
                 if jogador.nome == self.lider:
                     lider = jogador
+            input("\nO lider votou! Pressione Enter para prosseguir.")
             return lider.votar(participantes)
 
     def paredao_eliminacao(self):
@@ -119,7 +119,7 @@ class Jogo:
         participantes.remove(primeiro_emparedado)
         segundo_emparedado = participantes[self.votacao(participantes)]
 
-        print(f"\nO voto do lider foi {primeiro_emparedado}.")
+        print(f"\nO voto do lider foi {primeiro_emparedado.nome}.")
         print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado.nome} e {segundo_emparedado.nome}.")
         input("Pressione Enter para ver o resultado do paredão.")
 
@@ -148,8 +148,9 @@ class Jogo:
         sorteio = []
         indice_jogador = 0
 
-        for i in range(3):
+        for i in range(0,2):
             sorteio.append(random.randrange(0,100))
+
         for numero in sorteio:
             numero_sorte = abs(numero_vencedor - numero)
             jogador = self.jogadores_atuais[indice_jogador]
