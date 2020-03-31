@@ -9,6 +9,7 @@ class JogadorPrincipal:
         self.__velocidade = 0
         self.__resistencia = 0
         self.__sorte = random.randrange(0,100)
+        self.carisma = 50
 
     @property
     def nome(self):
@@ -87,6 +88,7 @@ class JogadorMaquina:
         self.__velocidade = int(velocidade)
         self.__resistencia = int(resistencia)
         self.__sorte = int(sorte)
+        self.carisma = 50
 
     def __str__(self):
         return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
