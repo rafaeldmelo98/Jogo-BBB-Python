@@ -118,9 +118,11 @@ class JogadorMaquina:
     def sorte(self):
         return self.__sorte
 
-    def votar(self, participantes, lider):
-        for count in range(len(participantes)):
-            if len(participantes) > 2:
-                return random.randrange(0, len(participantes)-1)
-            else:
-                return 0
+    def votar(self, participantes):
+        if len(participantes) > 1 and self in participantes:
+            participantes.remove(self)
+
+        if len(participantes) > 2:
+            return random.randrange(0, len(participantes) - 1)
+        else:
+            return 0

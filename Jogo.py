@@ -52,12 +52,12 @@ class Jogo:
 
     def carrega_jogadores(self):
         texto = open('nomes.txt', "r", encoding="utf-8")
-        todos_jogadores = [linha.replace("\n", "") for linha in texto] #captura todos os jogadores disponiveis
+        todos_jogadores = [linha.replace("\n", "") for linha in texto] # captura todos os jogadores disponiveis
         jogadores_selecionados = []
         while len(jogadores_selecionados) != 16:
-            indice = random.randrange(0, 100)           #sorteia jogadores disponiveis
+            indice = random.randrange(0, 100)           # sorteia jogadores disponiveis
             if todos_jogadores[indice] not in jogadores_selecionados:
-                jogadores_selecionados.append(todos_jogadores[indice])      #adiciona jogador sorteado
+                jogadores_selecionados.append(todos_jogadores[indice])      # adiciona jogador sorteado
 
         jogadores_atuais = []
         for jogador_selecionado in jogadores_selecionados:
@@ -92,7 +92,7 @@ class Jogo:
         for jogador in self.jogadores_atuais:
             if jogador == self.jogador_principal:
                 continue
-            voto = jogador.votar(participantes,False)
+            voto = jogador.votar(participantes)
             votos.append(voto)
 
         if len(participantes) < 2:
@@ -109,16 +109,18 @@ class Jogo:
             return voto
         else:
             input("\nO lider votou! Pressione Enter para prosseguir.")
-            return self.__lider.votar(participantes,True)
+            return self.__lider.votar(participantes)
 
     def paredao_eliminacao(self):
         participantes = self.selecionar_participantes()
-        primeiro_emparedado = participantes[self.voto_lider(participantes)]
+        disponiveis = self.jogadores_menor_carisma(participantes)
+        primeiro_emparedado = participantes[self.voto_lider(disponiveis)]
+        print(f"\nO voto do lider {self.lider.nome} foi {primeiro_emparedado.nome.upper()}.")
         participantes.remove(primeiro_emparedado)
-        segundo_emparedado = participantes[self.votacao(participantes)]
+        disponiveis = self.jogadores_menor_carisma(participantes)
+        segundo_emparedado = participantes[self.votacao(disponiveis)]
 
-        print(f"\nO voto do lider foi {primeiro_emparedado.nome}.")
-        print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado.nome} e {segundo_emparedado.nome}.")
+        print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado.nome.upper()} e {segundo_emparedado.nome.upper()}.")
         input("Pressione Enter para ver o resultado do paredão.")
 
         percentagem_primeiro_emparedado = random.randrange(0,100)
@@ -166,6 +168,25 @@ class Jogo:
 
     def verifica_jogador_principal_eh_lider(self):
         return self.jogador_principal == self.lider
+
+    def jogadores_menor_carisma(self, participantes):
+        disponivel = []
+        menor_carisma = 100
+
+        for jogador in participantes:
+            if jogador.carisma < menor_carisma:
+                menor_carisma = jogador.carisma
+
+        maior_carisma = menor_carisma + 20
+
+        # Captura jogadores disponiveis
+
+        for jogador in participantes:
+            if menor_carisma < jogador.carisma < maior_carisma:
+                disponivel.append(jogador)
+
+        return disponivel
+
 
     def selecionar_participantes(self):
         participantes = self.__jogadores_atuais.copy()
