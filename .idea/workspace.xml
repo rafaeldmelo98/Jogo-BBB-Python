@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6588471b-896a-4e36-803c-7fad823e53a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Crises.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogador.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jogador.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Crises.py" beforeDir="false" afterPath="$PROJECT_DIR$/Crises.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,28 +31,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="Jogo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="BBB" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\rafae\PycharmProjects\BBB\Jogo.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.testes_sintaxe">
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="BBB" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -88,6 +66,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="C:\Users\rafae\PycharmProjects\BBB\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="testes_sintaxe" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BBB" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testes_sintaxe.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -133,11 +132,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.testes_sintaxe" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.testezinhosintaxe" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python tests.Unittests for test_Jogo.TestJogo" />
-        <item itemvalue="Python.Jogo" />
       </list>
     </recent_temporary>
   </component>
@@ -167,22 +166,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1585580473125" />
-    <state width="1345" height="200" key="GridCell.Tab.0.bottom" timestamp="1585605399589">
+    <state width="672" height="200" key="GridCell.Tab.0.bottom" timestamp="1585632668933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="200" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585605399589" />
-    <state width="1345" height="200" key="GridCell.Tab.0.center" timestamp="1585605399589">
+    <state width="672" height="200" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585632668933" />
+    <state width="672" height="200" key="GridCell.Tab.0.center" timestamp="1585632668933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="200" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585605399589" />
-    <state width="1345" height="200" key="GridCell.Tab.0.left" timestamp="1585605399589">
+    <state width="672" height="200" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585632668933" />
+    <state width="672" height="200" key="GridCell.Tab.0.left" timestamp="1585632668933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="200" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585605399589" />
-    <state width="1345" height="200" key="GridCell.Tab.0.right" timestamp="1585605399589">
+    <state width="672" height="200" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585632668933" />
+    <state width="672" height="200" key="GridCell.Tab.0.right" timestamp="1585632668933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="200" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585605399589" />
+    <state width="672" height="200" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585632668933" />
     <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1585605399573">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -199,10 +198,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1345" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1585605399573" />
-    <state x="379" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1585607497760">
+    <state x="379" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1585685211352">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585607497760" />
+    <state x="379" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585685211352" />
     <state x="492" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585591510606">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
