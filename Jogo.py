@@ -121,21 +121,15 @@ class Jogo:
         segundo_emparedado = participantes[self.votacao(disponiveis)]
 
         print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado.nome.upper()} e {segundo_emparedado.nome.upper()}.")
-        input("Pressione Enter para ver o resultado do paredão.")
+        input("\nPressione Enter para ver o resultado do paredão.")
 
-        percentagem_primeiro_emparedado = random.randrange(0,100)
-        percentagem_segundo_emparedado = random.randrange(0,100)
-        if percentagem_primeiro_emparedado > percentagem_segundo_emparedado:
-            print(f"\nO público decidiu. E quem sai hoje é {primeiro_emparedado.nome.upper()}.")
-            self.__eliminados.append(primeiro_emparedado)
-            self.__jogadores_atuais.remove(primeiro_emparedado)
-        else:
-            print(f"\nO público decidiu. E quem sai hoje é {segundo_emparedado.nome.upper()}.")
-            self.__eliminados.append(segundo_emparedado)
-            self.__jogadores_atuais.remove(segundo_emparedado)
+        eliminado = self.eliminar_jogador(primeiro_emparedado, segundo_emparedado)
+
+        voto = random.randrange(51, 100)
+        print(f"\nO público decidiu. E quem sai hoje é {eliminado.nome.upper()} com {voto} % de votos.")
 
         if self.verifica_jogador_eliminado():
-            campeao = participantes[random.randrange(0,len(participantes))]
+            campeao = participantes[random.randrange(0, len(participantes))]
             print(f"\nVocê foi eliminado do jogo. O jogo seguiu sem você e o campeão foi {campeao.nome}.")
 
     def proxima_rodada(self):
@@ -197,3 +191,22 @@ class Jogo:
                 participantes.remove(jogador)
 
         return participantes
+
+    def definir_eliminado(self, primeiro_emparedado, num_primeiro_emparedo, segundo_emparedado, num_segundo_emparedado):
+        eliminado = segundo_emparedado if num_primeiro_emparedo > num_segundo_emparedado else primeiro_emparedado
+        self.__eliminados.append(eliminado)
+        self.__jogadores_atuais.remove(eliminado)
+        return eliminado
+
+    def eliminar_jogador(self, primeiro_emparedado, segundo_emparedado):
+        diferenca_carisma = abs(segundo_emparedado.carisma - primeiro_emparedado.carisma)
+        if diferenca_carisma <= 5:
+            percentagem_primeiro_emparedado = primeiro_emparedado.carisma + primeiro_emparedado.sorte
+            percentagem_segundo_emparedado = segundo_emparedado.carisma + segundo_emparedado.sorte
+            return self.definir_eliminado(primeiro_emparedado, percentagem_primeiro_emparedado, segundo_emparedado, percentagem_segundo_emparedado)
+        elif 5 < diferenca_carisma <= 15:
+            percentagem_primeiro_emparedado = primeiro_emparedado.carisma + random.randrange(0, 100)
+            percentagem_segundo_emparedado = segundo_emparedado.carisma + random.randrange(0, 100)
+            return self.definir_eliminado(primeiro_emparedado, percentagem_primeiro_emparedado, segundo_emparedado, percentagem_segundo_emparedado)
+        else:
+            return self.definir_eliminado(primeiro_emparedado, primeiro_emparedado.carisma, segundo_emparedado, segundo_emparedado.carisma)
