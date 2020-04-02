@@ -1,6 +1,7 @@
 from Jogador import JogadorMaquina
 from Jogador import JogadorPrincipal
 from Prova import Prova
+from Crises import Crise
 import random
 
 
@@ -12,10 +13,12 @@ class Jogo:
         self.__eliminados = []
         self.__lider = ""
         self.__anjo = ""
+        self.__roteiro = []
+        self.crise = ""
 
     def __str__(self):
 
-        return f"\n\nJogador principal: {self.jogador_principal}" + self.lista_jogadores() + self.lista_eliminados()
+        return f"\n\nJogador principal: \n{self.jogador_principal}" + self.lista_jogadores() + self.lista_eliminados()
 
     @property
     def jogador_principal(self):
@@ -41,13 +44,13 @@ class Jogo:
         print("\nJogadores atuais:\n")
         for jogador in self.jogadores_atuais:
             print(jogador)
-        return ""
+        return "-----------------------------------------------------------------------------------------------------------------------"
 
     def lista_eliminados(self):
         print("\nEliminados:\n")
         for eliminado in self.eliminados:
             print(eliminado)
-        return ""
+        return "-----------------------------------------------------------------------------------------------------------------------"
 
 
     def carrega_jogadores(self):
@@ -115,7 +118,7 @@ class Jogo:
         participantes = self.selecionar_participantes()
         disponiveis = self.jogadores_menor_carisma(participantes)
         primeiro_emparedado = participantes[self.voto_lider(disponiveis)]
-        print(f"\nO voto do lider {self.lider.nome} foi {primeiro_emparedado.nome.upper()}.")
+        print(f"\nO voto do lider {self.lider.nome} foi em {primeiro_emparedado.nome.upper()}.")
         participantes.remove(primeiro_emparedado)
         disponiveis = self.jogadores_menor_carisma(participantes)
         segundo_emparedado = participantes[self.votacao(disponiveis)]
@@ -135,6 +138,7 @@ class Jogo:
     def proxima_rodada(self):
         self.__lider = ""
         self.__anjo = ""
+        self.crise = ""
 
     def campeao_jogo(self):
         numero_vencedor = random.randrange(0,100)
@@ -210,3 +214,16 @@ class Jogo:
             return self.definir_eliminado(primeiro_emparedado, percentagem_primeiro_emparedado, segundo_emparedado, percentagem_segundo_emparedado)
         else:
             return self.definir_eliminado(primeiro_emparedado, primeiro_emparedado.carisma, segundo_emparedado, segundo_emparedado.carisma)
+
+    def adicionar_roteiro(self, semana):
+        roteiro = f"Semana {semana}:\n- Crise da semana: \n {self.crise}\n- Lider da semana: {self.lider.nome}\n" \
+                  f"- Anjo da semana: {self.anjo.nome}\n- Eliminado da semana: {self.eliminados[-1].nome}\n\n"
+        self.__roteiro.append(roteiro)
+
+    def exibe_roteiro(self):
+        for acontecimento in self.__roteiro:
+            print(acontecimento)
+
+    def acontecer_crise(self, semana):
+        participantes = self.selecionar_participantes()
+        self.crise = Crise(semana, participantes, self.jogador_principal).selecao_de_crise()

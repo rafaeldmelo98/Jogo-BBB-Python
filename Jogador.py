@@ -48,7 +48,13 @@ class JogadorPrincipal:
         self._resistencia = value
 
     def __str__(self):
-        return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
+        return "Jogador: {:30} (Peso:{} Kg, Altura:{} cm, VEL:{}, RES: {}, SOR: {}, CAR: {})".format(self.nome,
+                                                                                                     self.peso,
+                                                                                                     self.altura,
+                                                                                                     self.velocidade,
+                                                                                                     self.resistencia,
+                                                                                                     self.sorte,
+                                                                                                     self.carisma)
 
     def definir_valores_iniciais(self):
         #definindo valores de velocidade, resistencia e sorte de acordo com dados do jogador
@@ -95,6 +101,10 @@ class JogadorPrincipal:
 class JogadorMaquina:
     def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
         self.__nome = nome
+        if "Rafael Mello" in self.nome or "rafael mello" in self.nome or "rafael melo" in self.nome:
+            self.__nome = "Rafael de Melo"
+        if "Ricardo" in self.nome:
+            self.__nome = "Ricardo (Bostão)"
         self.__peso = int(peso)
         self.__altura = int(altura)
         self.__velocidade = int(velocidade)
@@ -103,7 +113,13 @@ class JogadorMaquina:
         self.carisma = 50
 
     def __str__(self):
-        return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
+        return "Jogador: {:30} (Peso:{} Kg, Altura:{} cm, VEL:{}, RES: {}, SOR: {}, CAR: {})".format(self.nome,
+                                                                                                     self.peso,
+                                                                                                     self.altura,
+                                                                                                     self.velocidade,
+                                                                                                     self.resistencia,
+                                                                                                     self.sorte,
+                                                                                                     self.carisma)
 
     @property
     def nome(self):
