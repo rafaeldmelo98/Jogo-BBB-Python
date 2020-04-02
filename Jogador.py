@@ -48,7 +48,7 @@ class JogadorPrincipal:
         self._resistencia = value
 
     def __str__(self):
-        return "Jogador: {:30} (Peso:{} Kg, Altura:{} cm, VEL:{}, RES: {}, SOR: {}, CAR: {})".format(self.nome,
+        return "Jogador: {:25} (Peso:{:3} Kg, Altura:{:3} cm, VEL:{:3}, RES: {:3}, SOR: {:3}, CAR: {:3})".format(self.nome,
                                                                                                      self.peso,
                                                                                                      self.altura,
                                                                                                      self.velocidade,
@@ -80,30 +80,31 @@ class JogadorPrincipal:
             self.__velocidade = random.randrange(20, 50)
 
     def votar(self, participantes):
+        voto_errado = True
         input("\nVoto do jogador. Pressione Enter para prosseguir\n")
         print("Jogadores disponiveis para voto.\n")
         jogadores_disponiveis = participantes.copy()
         if self in jogadores_disponiveis:
             jogadores_disponiveis.remove(self)
 
-        voto = -1
-        limite_minimo = -1
-
         for jogador in jogadores_disponiveis:
             print(f"{jogadores_disponiveis.index(jogador)} - {jogador.nome}")
 
-        voto = int(input("Informe o número do jogador que você deseja que saia: "))
-        if voto >= len(jogadores_disponiveis) or voto <= -1 or voto is None:
-            print("\n Informe o número de um jogador disponivel para voto!")
+        while voto_errado:
+            voto = int(input("Informe o número do jogador que você deseja que saia: "))
+            if (len(jogadores_disponiveis) - 1) <= voto <= 0:
+                print("\n Informe o número de um jogador disponivel para voto!")
+            else:
+                voto_errado = False
         return voto
 
 
 class JogadorMaquina:
     def __init__(self, nome, peso, altura, velocidade, resistencia, sorte):
         self.__nome = nome
-        if "Rafael Mello" in self.nome or "rafael mello" in self.nome or "rafael melo" in self.nome:
+        if "rafael mello" in self.nome.lower() or "rafael melo" in self.nome.lower():
             self.__nome = "Rafael de Melo"
-        if "Ricardo" in self.nome:
+        if "ricardo" in self.nome.lower():
             self.__nome = "Ricardo (Bostão)"
         self.__peso = int(peso)
         self.__altura = int(altura)
@@ -113,7 +114,7 @@ class JogadorMaquina:
         self.carisma = 50
 
     def __str__(self):
-        return "Jogador: {:30} (Peso:{} Kg, Altura:{} cm, VEL:{}, RES: {}, SOR: {}, CAR: {})".format(self.nome,
+        return "Jogador: {:25} (Peso:{:3} Kg, Altura:{:3} cm, VEL: {:3}, RES: {:3}, SOR: {:3}, CAR: {:3})".format(self.nome,
                                                                                                      self.peso,
                                                                                                      self.altura,
                                                                                                      self.velocidade,
@@ -146,10 +147,19 @@ class JogadorMaquina:
     def sorte(self):
         return self.__sorte
 
-    def votar(self, participantes):
-        if len(participantes) > 1 and self in participantes:
-            participantes.remove(self)
+    @velocidade.setter
+    def velocidade(self, value):
+        self._velocidade = value
 
+    @sorte.setter
+    def sorte(self, value):
+        self._sorte = value
+
+    @resistencia.setter
+    def resistencia(self, value):
+        self._resistencia = value
+
+    def votar(self, participantes):
         if len(participantes) > 2:
             return random.randrange(0, len(participantes) - 1)
         else:

@@ -44,20 +44,20 @@ class Jogo:
         print("\nJogadores atuais:\n")
         for jogador in self.jogadores_atuais:
             print(jogador)
-        return "-----------------------------------------------------------------------------------------------------------------------"
+        return ""
 
     def lista_eliminados(self):
         print("\nEliminados:\n")
         for eliminado in self.eliminados:
             print(eliminado)
-        return "-----------------------------------------------------------------------------------------------------------------------"
+        return ""
 
 
     def carrega_jogadores(self):
         texto = open('nomes.txt', "r", encoding="utf-8")
         todos_jogadores = [linha.replace("\n", "") for linha in texto] # captura todos os jogadores disponiveis
         jogadores_selecionados = []
-        while len(jogadores_selecionados) != 16:
+        while len(jogadores_selecionados) != 15:
             indice = random.randrange(0, 100)           # sorteia jogadores disponiveis
             if todos_jogadores[indice] not in jogadores_selecionados:
                 jogadores_selecionados.append(todos_jogadores[indice])      # adiciona jogador sorteado
@@ -85,20 +85,21 @@ class Jogo:
         prova_selecionada = random.randrange(1, 4)
         self.__anjo = Prova(prova_selecionada, participantes, self.jogador_principal,2).seletor_de_prova()
 
-    def votacao(self, participantes):
+    def votacao(self, disponiveis_menor_carisma, participantes):
         votos = []
         emparedado = -1
 
-        voto = self.jogador_principal.votar(participantes)
-        votos.append(voto)
+        if not self.verifica_jogador_principal_eh_lider():
+            voto = self.jogador_principal.votar(participantes)
+            votos.append(voto)
 
         for jogador in self.jogadores_atuais:
             if jogador == self.jogador_principal:
                 continue
-            voto = jogador.votar(participantes)
+            voto = jogador.votar(disponiveis_menor_carisma)
             votos.append(voto)
 
-        if len(participantes) < 2:
+        if len(disponiveis_menor_carisma) < 2:
             emparedado = random.randrange(0,1)
 
         input("\nA casa votou. Pressione Enter para ver o resultado.")
@@ -118,18 +119,30 @@ class Jogo:
         participantes = self.selecionar_participantes()
         disponiveis = self.jogadores_menor_carisma(participantes)
         primeiro_emparedado = participantes[self.voto_lider(disponiveis)]
+        primeiro_emparedado.carisma = 0 if primeiro_emparedado.carisma < 0 else primeiro_emparedado.carisma - 5
         print(f"\nO voto do lider {self.lider.nome} foi em {primeiro_emparedado.nome.upper()}.")
         participantes.remove(primeiro_emparedado)
         disponiveis = self.jogadores_menor_carisma(participantes)
-        segundo_emparedado = participantes[self.votacao(disponiveis)]
+        segundo_emparedado = participantes[self.votacao(disponiveis, participantes)]
+
+        self.diminuir_atributos_emparedados(primeiro_emparedado, segundo_emparedado)
 
         print(f"\nA casa decidiu. O paredão será entre {primeiro_emparedado.nome.upper()} e {segundo_emparedado.nome.upper()}.")
         input("\nPressione Enter para ver o resultado do paredão.")
 
         eliminado = self.eliminar_jogador(primeiro_emparedado, segundo_emparedado)
 
+        if primeiro_emparedado != eliminado:
+            primeiro_emparedado.sorte += 10
+            if primeiro_emparedado.sorte > 100:
+                primeiro_emparedado.sorte = 100
+        else:
+            segundo_emparedado.sorte += 10
+            if segundo_emparedado.sorte > 100:
+                segundo_emparedado.sorte = 100
+
         voto = random.randrange(51, 100)
-        print(f"\nO público decidiu. E quem sai hoje é {eliminado.nome.upper()} com {voto} % de votos.")
+        print(f"\nO público decidiu. E quem sai hoje é {eliminado.nome.upper()} com {voto} % dos votos.")
 
         if self.verifica_jogador_eliminado():
             campeao = participantes[random.randrange(0, len(participantes))]
@@ -175,12 +188,12 @@ class Jogo:
             if jogador.carisma < menor_carisma:
                 menor_carisma = jogador.carisma
 
-        maior_carisma = menor_carisma + 20
+        maior_carisma = menor_carisma + 25
 
         # Captura jogadores disponiveis
 
         for jogador in participantes:
-            if menor_carisma < jogador.carisma < maior_carisma:
+            if menor_carisma < jogador.carisma and jogador.carisma < maior_carisma:
                 disponivel.append(jogador)
 
         return disponivel
@@ -227,3 +240,14 @@ class Jogo:
     def acontecer_crise(self, semana):
         participantes = self.selecionar_participantes()
         self.crise = Crise(semana, participantes, self.jogador_principal).selecao_de_crise()
+
+    def diminuir_atributos_emparedados(self, primeiro, segundo):
+        primeiro.resistencia = 100 if primeiro.resistencia > 100 else primeiro.resistencia - 5
+        primeiro.sorte = 100 if primeiro.sorte > 100 else primeiro.sorte - 5
+        primeiro.velocidade = 100 if primeiro.velocidade > 100 else primeiro.velocidade - 5
+        primeiro.carisma = 100 if primeiro.carisma > 100 else primeiro.carisma - 5
+
+        segundo.resistencia = 100 if segundo.resistencia > 100 else segundo.resistencia - 5
+        segundo.sorte = 100 if segundo.sorte > 100 else segundo.sorte - 5
+        segundo.velocidade = 100 if segundo.velocidade > 100 else segundo.velocidade - 5
+        segundo.carisma = 100 if segundo.carisma > 100 else segundo.carisma - 5

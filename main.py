@@ -6,7 +6,7 @@ import os
 os.system('cls')
 print("Olá, você está preste a participar da casa mais vigiada do Brasil.\n")
 print("Antes de você iniciar precisamos saber algumas informações sobre você.\n")
-nome = input("\nInforme o seu nome e sobrenome. Ex: Thiago Leifert :)\n-> ")
+nome = input("Informe o seu nome e sobrenome. Ex: Thiago Leifert :)\n-> ")
 nome = nome.lower().title()
 peso = int(input("\nInforme o seu peso em Kg. Ex: 68\n-> "))
 altura = int(input("\nInforme a sua altura em cm. Ex: 177\n-> "))
@@ -18,10 +18,10 @@ os.system('cls')
 
 print(f"Tudo certo, {jogador_principal.nome}. Agora vamos começar!\n")
 print("O jogo funciona da seguinte forma, você deverá tentar sobreviver as 13 semanas dentro da casa.\n"
-      "Você participará de provas de lider, provas de anjo, participará de crises internas e do paredão.\n")
+      "Você participará de provas de lider, provas de anjo, crises internas e do paredão.\n")
 print("O resultado das provas, das crises e do paredão irão modificar a dinâmica do jogo.\n")
-print("Preste atenção nos atributos de seus adversários e tente estabelecer uma estrátegia para vencer\n")
-print("A seguir você iniciará no jogo.\n\nSão 13 semanas que você deverá tentar sobreviver. BOA SORTE!")
+print("Preste atenção nos atributos de seus adversários e tente estabelecer uma estrátegia para vencer.\n")
+print("A seguir, você iniciará no jogo.\n\nSão 13 semanas que você deverá tentar sobreviver. BOA SORTE!")
 input("\nPressione Enter para prosseguir.")
 print("Esses são seus adversários:\n")
 jogo.lista_jogadores()
@@ -31,18 +31,23 @@ semana = 1
 selecao = -1
 while selecao != 0:
     os.system('cls')
-    print("=== MENU ===")
-    if semana == 1:
-        print("[1] Jogar \n\n[2] Status do Jogo\n\n [4] Versão\n\n[0] Abandonar Jogo")
-        selecao = input("-> ")
-    if semana > 1:
-        print("[1] Próxima Semana\n\n[2] Status do Jogo\n\n[3] Roteiro\n\n[4] Versão\n\n[0] Abandonar Jogo")
+    errado = True
 
+    while errado:
+        print("=== MENU ===")
+        if semana == 1:
+            print("[1] Jogar \n\n[2] Status do Jogo\n\n[4] Versão\n\n[0] Abandonar Jogo")
+            selecao = input("-> ")
+        if semana > 1:
+            print("[1] Próxima Semana\n\n[2] Status do Jogo\n\n[3] Roteiro\n\n[4] Versão\n\n[0] Abandonar Jogo")
+            selecao = input("-> ")
+        if selecao != "1" and selecao != "2" and selecao != "3" and selecao != "4" and selecao != "0":
+            input("Por favor, informe um valor válido.")
+            os.system('cls')
+        else:
+            selecao = int(selecao)
+            errado = False
 
-    if not selecao != "" and int(selecao) != (1 or 2 or 3 or 4 or 0):
-        input("Por favor, informe um valor válido.")
-    else:
-        selecao = int(selecao)
     if selecao == 1:
         if len(jogo.jogadores_atuais) == 3 and jogador_principal in jogo.jogadores_atuais:
             os.system('cls')
@@ -98,6 +103,7 @@ while selecao != 0:
     if selecao == 3:
         os.system('cls')
         jogo.exibe_roteiro()
+        input("Pressione Enter para retornar ao MENU")
     if selecao == 4:
         os.system('cls')
         print("Versão 1.0:\n"
@@ -121,8 +127,10 @@ while selecao != 0:
               "+ Implementação de roteiro.\n"
               "+ Atualização de texto e correção ortográfica."
               "\n\n\n\n\n"
-              "Desenvolvedor: Rafael de Melo    -    Estudante de Engenharia da Computação\n\n"
-              "Colaboradores: Felipe \"Pacheco\" Pacheco, Rafael \"KZ\" Caselli")
+              "Desenvolvedor: Rafael de Melo    -    Estudante de Engenharia da Computação                              LL!FB!DM!<-FRV!\n\n"
+              "Colaboradores: Felipe \"Pacheco\" Pacheco, Rafael \"KZ\" Caselli\n\n")
+        input("Pressione Enter para retornar ao MENU")
 
-
+print("Essa foi sua trajetória até aqui:")
+jogo.exibe_roteiro()
 input("Aperte enter para encerrar!")
