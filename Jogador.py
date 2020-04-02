@@ -35,6 +35,18 @@ class JogadorPrincipal:
     def sorte(self):
         return self.__sorte
 
+    @velocidade.setter
+    def velocidade(self, value):
+        self._velocidade = value
+
+    @sorte.setter
+    def sorte(self, value):
+        self._sorte = value
+
+    @resistencia.setter
+    def resistencia(self, value):
+        self._resistencia = value
+
     def __str__(self):
         return f"Jogador: {self.nome} (Peso:{self.peso} Kg, Altura:{self.altura} cm, VEL:{self.velocidade}, RES: {self.resistencia}, SOR: {self.sorte})"
 

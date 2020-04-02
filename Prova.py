@@ -26,50 +26,90 @@ class Prova:
         return ganhador
 
     def prova_de_sorte(self):
-        input("Essa é uma prova de sorte. Os jogadores deverão pegar o máximo de bolinhas que conseguirem. O primeiro a"
-              " conseguir capturar o maior número de bolinhas ganha."
+        input("Essa é uma prova de sorte. Os jogadores deverão pegar o máximo de bolinhas que conseguirem antes do tempo"
+              "acabar. \nO primeiro a conseguir capturar o maior número de bolinhas ganha."
+              "\n\nJogadores com maior sorte tem mais chance de ganhar."
               "\nPressione Enter para prosseguir.")
+
+        jogador_upado = []
+
         while len(self.participantes) != 1:
-            numero_sorte = random.randrange(0, 200)
             minimo = 200
             removido = 0
-            frase_escolhida = random.randrange(1,3)
+            frase_escolhida = random.randrange(1,8)
             ganhador = 0
 
             for jogador in self.participantes:
-                bolinhas_capturadas = abs(numero_sorte - jogador.sorte)
-                if bolinhas_capturadas < minimo:
-                    minimo = bolinhas_capturadas
+                if jogador.sorte < minimo:
+                    minimo = jogador.sorte
                     removido = jogador
             if len(self.participantes) > 3:
                 if frase_escolhida == 1:
+                    self.participantes.remove(removido)
                     input(f"\n{removido.nome} pegou diversas bolinhas, mas não o suficiente para se manter no jogo e está"
                         f" eliminado.\nPressione Enter para continuar a prova.")
-                    self.participantes.remove(removido)
                 if frase_escolhida == 2:
-                    input(f"\n{removido.nome} não teve sorte o suficiente na hora de escolher onde ficar para pegar as bolinhas"
-                        f" e está eliminado da prova.\nPressione Enter para continuar a prova.")
                     self.participantes.remove(removido)
+                    input(f"\n{removido.nome} escorregou e perdeu todas as suas bolas e está eliminado."
+                        f"\nPressione Enter para continuar a prova.")
                 if frase_escolhida == 3:
+                    self.participantes.remove(removido)
+                    input(f"\nFoi uma disputa acirradissima entre {self.participantes[random.randrange(0,len(self.participantes)-1)].nome},"
+                          f" {self.participantes[random.randrange(0,len(self.participantes)-1)].nome} e {removido.nome} \n"
+                          f"mas infelizmente {removido.nome} está fora da prova.\nPressione Enter para continuar a prova.")
+                if frase_escolhida == 4:
+                    self.participantes.remove(removido)
+                    input(f"\n{removido.nome} não conseguiu pegar nenhuma bola se quer e está eliminado."
+                        f" \nPressione Enter para continuar a prova.")
+                if frase_escolhida == 5:
+                    self.participantes.remove(removido)
+                    input(f"\n{self.participantes[random.randrange(0,len(self.participantes)-1)]} cuspiu no chão o que "
+                          f"ocasionou na queda de {removido.nome} e eliminou o participante da prova."
+                          f"\nPressione Enter para continuar a prova.")
+                if frase_escolhida == 6:
+                    self.participantes.remove(removido)
                     input(f"\nFoi uma disputa acirradissima entre os participantes mas infelizmente {removido.nome} está"
                         f" fora da prova.\nPressione Enter para continuar a prova.")
+                if frase_escolhida == 7:
                     self.participantes.remove(removido)
+                    input(f"\nInfringiu uma regra da prova {removido.nome} o que ocasionou em sua eliminação imediata da prova."
+                          f"\nPressione Enter para continuar a prova.")
+                if frase_escolhida == 8:
+                    self.participantes.remove(removido)
+                    input(f"\n{removido.nome} sofreu um leve acidente rolando duas vezes no chão tentando recuperar suas bolas\n"
+                          f"e por esse motivo está fora da prova."
+                          f"\nPressione Enter para continuar a prova.")
             elif len(self.participantes) == 3:
-                input(f"\nO(A) jogador(a) {removido.nome} saiu da prova. FALTAM APENAS DOIS JOGADORES PARA O NOVO {self.tipo_de_prova.upper()}."
-                      f"\nPressione Enter para ver quem é o novo ganhador.")
                 self.participantes.remove(removido)
+                input(f"\n{removido.nome} saiu da prova. FALTAM APENAS {self.participantes[0].nome.upper()} e {self.participantes[1].nome.upper()} "
+                      f"PARA O NOVO {self.tipo_de_prova.upper()}."
+                      f"\nPressione Enter para ver quem é o novo ganhador.")
+                jogador_upado.append(self.participantes[0])
+                jogador_upado.append(self.participantes[1])
+                jogador_upado.append(removido)
             else:
                 self.participantes.remove(removido)
                 ganhador = self.participantes[0]
-                input(f"\nParabéns {ganhador.nome} você é o novo {self.tipo_de_prova}. Boa sorte da próxima vez {removido.nome}."
-                      f"\nPressione Enter para seguir.")
+                print(f"\nParabéns {ganhador.nome} você é o novo {self.tipo_de_prova}. Boa sorte da próxima vez {removido.nome}.")
+                print(f"\n{jogador_upado[0].nome}, {jogador_upado[1].nome} e {jogador_upado[2].nome} sofreram alterações nos atributos.")
+                for jogador in jogador_upado:
+                    jogador.resistencia += 5
+                    if jogador.resistencia > 100:
+                        jogador.resistencia = 100
+                input(f"\nPressione Enter para prosseguir.")
         return ganhador
 
     def prova_de_resistencia(self):
+
         input("Essa é uma prova de resistência. Os jogadores deverão permanecer na mesma posição pelo máximo de tempo possivel."
+              "\nJogadores com maior resistência ganharão a prova."
               "\nPressione Enter para prosseguir.")
+        primeiro_removido = True
+
+        jogador_upado = []
+
         while len(self.participantes) != 1:
-            frase_escolhida = random.randrange(1,3)
+            frase_escolhida = random.randrange(1,6)
             minimo = 100
             removido = 0
             ganhador = 0
@@ -90,21 +130,60 @@ class Prova:
                     input(f"Precisamos respeitar os limites do nosso corpo, e com consciência disso {removido.nome} está"
                           f" fora da prova.\nPressione Enter para continuar a prova.")
                     self.participantes.remove(removido)
+                if frase_escolhida == 4:
+                    input(f"{removido.nome}, não aguentou as provocações de {self.participantes[random.randrange(0,len(self.participantes)-1)]}"
+                          f" e desistiu da prova.\nPressione Enter para continuar a prova.")
+                    self.participantes.remove(removido)
+                if frase_escolhida == 5:
+                    input(f"Lágrimas e mais lágrimas escorreram do rosto de {removido.nome} que não aguentou a prova e "
+                          f" está fora.\nPressione Enter para continuar a prova.")
+                    self.participantes.remove(removido)
+                if frase_escolhida == 6:
+                    input(f"{removido.nome} desmaiou na prova e teve que ter atendimento médico, e acabou perdendo a prova."
+                          f"\nPressione Enter para continuar a prova.")
+                    self.participantes.remove(removido)
+                if frase_escolhida == 7:
+                    input(f"{removido.nome} não conseguiu se manter firme por muito tempo e cedeu."
+                          f"\nPressione Enter para continuar a prova.")
+                    self.participantes.remove(removido)
+                if frase_escolhida == 7:
+                    input(f"\"Eu não vou desistir agora\" gritou {removido.nome} momentos antes de desabar sentindo dores"
+                          f"musculares."
+                          f"\nPressione Enter para continuar a prova.")
             elif len(self.participantes) == 3:
-                horas_prova = random.randrange(12,48)
-                input(f"\nApós mais de {horas_prova}, {removido.nome} não resisti por mais tempo e abandona a prova. "
-                      f"FALTAM APENAS DOIS JOGADORES PARA O NOVO {self.tipo_de_prova.upper()}."
-                      f"\nPressione Enter para ver quem é o novo {self.tipo_de_prova}.")
                 self.participantes.remove(removido)
+                horas_prova = random.randrange(12,48)
+                input(f"\nApós mais de {horas_prova}, {removido.nome} não resistiu por mais tempo e abandonou a prova."
+                      f"\nRESTA APENAS {self.participantes[0].nome.upper()} E {self.participantes[1].nome.upper()} PARA O NOVO {self.tipo_de_prova.upper()}."
+                      f"\nPressione Enter para ver quem é o novo {self.tipo_de_prova}.")
+                jogador_upado.append(self.participantes[0])
+                jogador_upado.append(self.participantes[1])
+                jogador_upado.append(removido)
             else:
                 self.participantes.remove(removido)
                 ganhador = self.participantes[0]
-                input(f"\nParabéns {ganhador.nome} você é o novo {self.tipo_de_prova}. Boa sorte da próxima vez {removido.nome}"
-                      f"\nPressione Enter para seguir.")
+                print(f"\nParabéns {ganhador.nome} você é o novo {self.tipo_de_prova}. Boa sorte da próxima vez {removido.nome}")
+                print(f"\n{jogador_upado[0].nome}, {jogador_upado[1].nome} e {jogador_upado[2].nome} sofreram alterações nos atributos.")
+                for jogador in jogador_upado:
+                    jogador.velocidade += 5
+                    jogador.sorte += 13
+                    if jogador.velocidade > 100:
+                        jogador.velocidade = 100
+                    if jogador.sorte > 100:
+                        jogador.sorte = 100
+                input(f"\nPressione Enter para seguir.")
+
+            if primeiro_removido:
+                primeiro_removido = False
+                removido.sorte -= 10
+                if removido.resistencia < 0:
+                    removido.resistencia = 0
         return ganhador
 
     def prova_de_velocidade(self):
-        input("Essa é uma prova de velocidade e um pouquinho de sorte. Os jogadores deverão percorrer um percurso e coletar alguns itens."
+        input("Essa é uma prova de velocidade e um pouquinho de sorte. Os jogadores deverão percorrer um percurso e estourar \n"
+              "o máximo de balões que conseguirem antes do tempo acabar."
+              "\nJogadores com maior velocidade e sorte."
               "\nVence o mais veloz com o maior número de itens.\nPressione Enter para prosseguir.")
         maior_quantidade = 0
         ganhador = 0
@@ -112,37 +191,41 @@ class Prova:
         for jogador in self.participantes:
             soma_atributos = jogador.velocidade + jogador.sorte
             if soma_atributos == 200:
-                bolas_coletadas = 25
-                maior_quantidade = bolas_coletadas
+                baloes = 25
+                maior_quantidade = baloes
                 ganhador = jogador
-                input(f"\n{jogador.nome} foi muito bem e conseguiu coletar todas as {bolas_coletadas} bolas.\nProvavelmente"
+                input(f"\n{jogador.nome} foi muito bem e conseguiu estourar TODOS OS {baloes} balões.\nProvavelmente"
                       f"será o novo {self.tipo_de_prova}.\nPressione Enter para ver o resultado do próximo jogador.")
             elif 150 <= soma_atributos < 200:
-                bolas_coletadas = random.randrange(20,24)
-                input(f"\n{jogador.nome} conseguiu capturar {bolas_coletadas} bolas."
+                baloes = random.randrange(20,24)
+                input(f"\n{jogador.nome} estorou {baloes} bolas. Boa prova!"
                       f"\nPressione Enter para ver o resultado do próximo jogador.")
-                if bolas_coletadas > maior_quantidade:
-                    maior_quantidade = bolas_coletadas
+                if baloes > maior_quantidade:
+                    maior_quantidade = baloes
                     ganhador = jogador
             elif 100 <= soma_atributos < 150:
-                bolas_coletadas = random.randrange(15,19)
-                input(f"\n{jogador.nome} não tão veloz, conseguiu pegar {bolas_coletadas} bolas."
+                baloes = random.randrange(15,19)
+                input(f"\n{jogador.nome} correu bastante mas não deu sorte e só estorou {baloes} balões."
                       f"\nPressione Enter para ver o resultado do próximo jogador.")
-                if bolas_coletadas > maior_quantidade:
-                    maior_quantidade = bolas_coletadas
+                if baloes > maior_quantidade:
+                    maior_quantidade = baloes
                     ganhador = jogador
             else:
-                bolas_coletadas = random.randrange(5,14)
-                input(f"\n{jogador.nome} coletou {bolas_coletadas} bolas. Não foi uma boa prova para {jogador.nome}."
+                baloes = random.randrange(5,14)
+                input(f"\n{jogador.nome} não deve ter tomado café da manhã, estorou apenas {baloes} balões. Não foi uma boa prova para {jogador.nome}."
                       f"\nPressione Enter para ver o resultado do próximo jogador.")
-                if bolas_coletadas > maior_quantidade:
-                    maior_quantidade = bolas_coletadas
+                if baloes > maior_quantidade:
+                    maior_quantidade = baloes
                     ganhador = jogador
-        input(f"\nParabéns {ganhador.nome}. Você é o novo {self.tipo_de_prova}!\nPressione Enter para prosseguir")
+        print(f"\nParabéns {ganhador.nome}. Você é o novo {self.tipo_de_prova}!")
+        print(f"\n{ganhador.nome} sofreu alterações de atributo.")
+        ganhador.resistencia = 100 if ganhador.resistencia > 100 else ganhador.resistencia + 10
+        ganhador.velocidade = 100 if ganhador.velocidade > 100 else ganhador.velocidade + 5
+        input("\nPressione Enter para prosseguir.")
         return ganhador
 
     def prova_interativa_jaula(self):
-        input("Essa é uma prova de escolhas. Selecione dentre das opções qual das jaulas você quer ficar e tente sobreviver na prova"
+        input("Essa é uma prova de escolhas. Selecione dentre das opções qual das jaulas você quer ficar e tente sobreviver na prova!"
               "\nPressione Enter para continuar.")
         eliminados = []
         ganhador = 0
@@ -171,6 +254,12 @@ class Prova:
                         if chute_maquina != jaula_salva:
                             self.participantes.remove(jogador)
                             eliminados.append(jogador.nome)
+                    if len(eliminados) == 4:
+                        for jogador in eliminados:
+                            jogador.resistencia = 0 if jogador.resistencia < 0 else jogador.resistencia - 10
+                            jogador.sorte = 0  if jogador.sorte < 0 else jogador.sorte - 10
+                            jogador.velocidade = 0  if jogador.velocidade < 0 else jogador.velocidade - 10
+                            jogador.carisma = 0  if jogador.carisma < 0 else jogador.carisma - 10
                 print(f"\nA jaula correta é a {jaula_salva}.")
                 if ganhador == 0:
                     print(f"\nOs seguintes jogadores não escolheram a jaula {jaula_salva} e estão eliminados da prova.")
@@ -180,53 +269,52 @@ class Prova:
                 print("\nSobraram apenas 3 jogadores.")
                 if self.jogador_principal in self.participantes:
                     jaula_salva = random.randrange(1, 3)
+
                     chute_jogador = input("\nSelecione a jaula [1], [2] ou [3] .\n-> ")
+
                     if chute_jogador == jaula_salva:
-                        ganhador = self.jogador_principal
                         input(f"{self.jogador_principal.nome} escolheu a jaula certa e é o novo {self.tipo_de_prova}.\n Pressione Enter"
                               f" para prosseguir")
+                        return self.jogador_principal
                     elif chute_jogador == 1:
                         chute_maquina = 2
                         if jaula_salva == chute_maquina:
                             print(f"{self.jogador_principal.nome} e {self.participantes[2].nome} escolheram a jaula errada.")
                             print(f"{self.participantes[1].nome} é o novo {self.tipo_de_prova}.")
-                            ganhador = self.participantes[1]
+                            return self.participantes[1]
                         else:
                             print(f"{self.jogador_principal.nome} e {self.participantes[1].nome} escolheram a jaula errada.")
                             print(f"{self.participantes[2].nome} é o novo {self.tipo_de_prova}.")
-                            ganhador = self.participantes[2]
+                            return self.participantes[2]
                     elif chute_jogador == 2:
                         chute_maquina = 1
                         if jaula_salva == chute_maquina:
                             print(
                                 f"{self.jogador_principal.nome} e {self.participantes[2].nome} escolheram a jaula errada.")
                             print(f"{self.participantes[1].nome} é o novo {self.tipo_de_prova}.")
-                            ganhador = self.participantes[1]
+                            return self.participantes[1]
                         else:
                             print(
                                 f"{self.jogador_principal.nome} e {self.participantes[1].nome} escolheram a jaula errada.")
                             print(f"{self.participantes[2].nome} é o novo {self.tipo_de_prova}.")
-                            ganhador = self.participantes[2]
+                            return self.participantes[2]
                     elif chute_jogador == 3:
                         chute_maquina = 1
                         if jaula_salva == chute_maquina:
                             print(
                                 f"{self.jogador_principal.nome} e {self.participantes[2].nome} escolheram a jaula errada.")
                             print(f"{self.participantes[1].nome} é o novo {self.tipo_de_prova}.")
-                            ganhador = self.participantes[1]
+                            return self.participantes[1]
                         else:
                             print(f"{self.jogador_principal.nome} e {self.participantes[1].nome} escolheram a jaula errada.")
                             print(f"{self.participantes[2].nome} é o novo {self.tipo_de_prova}.")
-                            ganhador = self.participantes[2]
-
-                    return ganhador
+                            return self.participantes[2]
                 else:
                     sorteio_ganhador = random.randrange(0,2)
                     ganhador = self.participantes[sorteio_ganhador]
                     input(f"{self.participantes[0].nome}, {self.participantes[1].nome}, {self.participantes[2].nome}, já escolheram suas jaulas."
                           f"\nPressione Enter para descobrir quem é o novo {self.tipo_de_prova}.")
                     input(f"\nO novo {self.tipo_de_prova} é {ganhador.nome}! Parabéns!\nPressione Enter para prosseguir.")
-
                     return ganhador
             elif len(self.participantes) == 2:
                 print("\nSobraram apenas 2 jogadores.")
@@ -246,12 +334,9 @@ class Prova:
                     ganhador = self.participantes[vencedor]
                     input(f"\nParabéns {ganhador.nome}, você escolheu a jaula certa e é o novo {self.tipo_de_prova}.\nPressione Enter para prosseguir.")
                     return ganhador
-        if ganhador == 0:
-            ganhador = self.participantes[0]
-        return ganhador
 
     def prova_elimina_jogador(self):
-        input("Essa é uma prova de eliminação. Vence o último jogador a ser eliminado.\nPressione Enter para prosseguir.")
+        input("Essa é uma prova de eliminação. Vence o último jogador a ser eliminado.\nPressione Enter para continuar.")
         informado = False
         while len(self.participantes) != 1:
             for jogador in self.participantes:
@@ -277,5 +362,10 @@ class Prova:
                     informado = True
                     input(f"\nVocê foi eliminado da prova.\nPressione Enter para continuar.\n")
         ganhador = self.participantes[0]
-        input(f"Parabéns {ganhador.nome}, você é o novo {self.tipo_de_prova}.")
+        print(f"Parabéns {ganhador.nome}, você é o novo {self.tipo_de_prova}.")
+        input("O ganhador da prova sofreu alterações em seus atributos.")
+        ganhador.resistencia = 100 if jogador.resistencia > 100 else jogador.resistencia + 10
+        ganhador.sorte = 100 if jogador.sorte > 100 else jogador.sorte + 10
+        ganhador.velocidade = 100 if jogador.velocidade > 100 else jogador.velocidade + 10
+        ganhador.carisma = 100 if jogador.carisma > 100 else jogador.carisma + 10
         return ganhador
