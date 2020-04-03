@@ -106,19 +106,19 @@ class Jogo:
 
         return emparedado
 
-    def voto_lider(self, participantes):
+    def voto_lider(self, disponiveis_menor_carisma, participantes):
         if self.verifica_jogador_principal_eh_lider():
             voto = self.jogador_principal.votar(participantes)
             input("\nO lider votou! Pressione Enter para prosseguir.")
             return voto
         else:
             input("\nO lider votou! Pressione Enter para prosseguir.")
-            return self.__lider.votar(participantes)
+            return self.__lider.votar(disponiveis_menor_carisma)
 
     def paredao_eliminacao(self):
         participantes = self.selecionar_participantes()
         disponiveis = self.jogadores_menor_carisma(participantes)
-        primeiro_emparedado = participantes[self.voto_lider(disponiveis)]
+        primeiro_emparedado = participantes[self.voto_lider(disponiveis, participantes)]
         primeiro_emparedado.carisma = 0 if primeiro_emparedado.carisma < 0 else primeiro_emparedado.carisma - 5
         print(f"\nO voto do lider {self.lider.nome} foi em {primeiro_emparedado.nome.upper()}.")
         participantes.remove(primeiro_emparedado)
